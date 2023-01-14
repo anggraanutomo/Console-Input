@@ -44,6 +44,7 @@ public class Main
         System.out.println("Masukkan banyak data: ");
         int jumlahData = scanner.nextInt();
 
+
         // Looping sebanyak jumlah data
         for (int i = 0; i < jumlahData; i++)
         {
@@ -64,11 +65,10 @@ public class Main
         }
 
         // Looping untuk menampilkan data
-        System.out.println("No. | Kode Pesawat | Nama Pesawat | Kode Tujuan | Daerah Tujuan | Harga Tiket | Jumlah Tiket | Diskon | Total Bayar");
-        System.out.printf("%2s  | %10s  | %17s  | %9s  | %12s  | %10s  | %11s  | %6s  | %11s\n",
-                    "No.", "Kode Pesawat", "Nama Pesawat", "Kode Tujuan", "Daerah Tujuan", "Harga Tiket", "Jumlah Tiket", "Diskon", "Total Bayar");
-
-        System.out.println("------------------------------------------------------------------------------------------------------------");
+        System.out.println("+----+----------------+---------------------+--------------+----------------+----------------+----------------+---------+----------------+");
+        System.out.printf("| %2s  %15s  %20s  %13s  %15s  %15s  %15s  %8s  %15s |\n",
+                "No.", "Kode Pesawat", "Nama Pesawat", "Kode Tujuan", "Daerah Tujuan", "Harga Tiket", "Jumlah Tiket", "Diskon", "Total Bayar");
+        System.out.println("+----+----------------+---------------------+--------------+----------------+----------------+----------------+---------+----------------+");
         for (int i = 0; i < dataPenerbangan.size(); i++)
         {
             DataPenerbangan data = dataPenerbangan.get(i);
@@ -78,31 +78,32 @@ public class Main
             int harga = hargaTiket.get(data.getKey());
             int jumlahTiket = data.getJumlahTiket();
             int jumlahBayar = harga * jumlahTiket;
-            int diskon = hitungDiskon(jumlahBayar);
-            int total = jumlahBayar - (jumlahBayar * diskon);
+            double diskon = hitungDiskon(jumlahBayar);
+            int total = (int) (jumlahBayar -  (jumlahBayar * diskon));
 
-            System.out.printf("%2d  | %10s  | %17s  | %9s  | %12s  | %10s  | %11d  | %6d  | %11s\n",
+            System.out.printf("| %2d  %15s  %20s  %13s  %15s  %15s  %15d  %8d  %15s |\n",
                     i + 1, kodePesawat, pesawat.get(kodePesawat), kodeTujuan, tujuan.get(kodeTujuan),
                     rupiahFormat.format((double) harga),
-                    jumlahTiket, diskon, rupiahFormat.format((double) total));
+                    jumlahTiket, (int) (diskon * 100), rupiahFormat.format((double) total));
         }
+        System.out.println("+----+----------------+---------------------+--------------+----------------+----------------+----------------+---------+----------------+");
     }
 
-    public static int hitungDiskon(int jumlahBayar)
+    public static double hitungDiskon(int jumlahBayar)
     {
-        int diskon = 0;
+        double diskon = 0;
 
-        if (jumlahBayar > 10_000_000)
+        if (jumlahBayar > 10000000)
         {
-            diskon = 25 / 100;
+            diskon = 0.25;
         }
-        else if (jumlahBayar > 7_500_000)
+        else if (jumlahBayar > 7500000)
         {
-            diskon = 15 / 100;
+            diskon = 0.15;
         }
-        else if (jumlahBayar > 5_000_000)
+        else if (jumlahBayar > 5000000)
         {
-            diskon = 10 / 100;
+            diskon = 0.1;
         }
 
         return diskon;
